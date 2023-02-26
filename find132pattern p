@@ -17,3 +17,22 @@ class Solution {
 
     }
 }
+// by dequeu
+
+class Solution {
+    public boolean find132pattern(int[] nums) {
+
+        int third = Integer.MIN_VALUE;
+        Deque<Integer> stack = new ArrayDeque<>();
+        for(int i = nums.length - 1; i >= 0; i--){
+            if(nums[i] < third){
+                //if nums[i] < third, means we have found second (in stack which is the largest) and a smaller element than third element, which matches 132 pattern.
+                return true;
+            }
+            while(!stack.isEmpty() && nums[i] > stack.peekLast()){
+                third = stack.pollLast(); // if found a element larger than current max in stack, we keep poping until find the largest element that is smaller than nums[i] which is third value;
+            }
+            stack.offerLast(nums[i]);
+        }
+        return false;
+    }
